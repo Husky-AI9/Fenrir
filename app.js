@@ -5,6 +5,8 @@ var app = require('http').createServer(handler)
 
 app.listen(5000); // Use local port 5000
 
+var PythonShell = require('python-shell');
+
 var PololuMaestro = require("node-pololumaestro");
 var maestro = new PololuMaestro("/dev/ttyACM0");
 var yaw = 1200;
@@ -105,6 +107,21 @@ function handler (req, res) {
   var UnverseServo10 = [6411, 6411, 6411, 5184, 4194, 4194, 4194, 4194, 6411];
   var UnverseServo11 = [6217, 6217, 6217, 7802, 5736, 5736, 5736, 5736, 6217];
   var UnverseServo12 = [9323, 9323, 9323, 9323, 9323, 9323, 9323, 9323, 9323];
+
+  var ServoTransform1  = [8933, 8933, 8933, 8933, 8933, 8933, 8933, 8933, 8933];  
+  var ServoTransform2  = [3508, 1984, 0,0,0,0,0,0,0];
+  var ServoTransform3  = [8858, 10944,0,0,0,0,0,0,0];
+  var ServoTransform4  = [3704, 3704, 3704, 3704, 3704, 3704, 3704, 3704, 3704];
+  var ServoTransform5  = [3218, 3218, 3218, 3218, 3218, 3218, 3218, 2047, 0];
+  var ServoTransform6  = [6580, 6580, 6580, 6580, 6580, 6580, 6580, 8296, 0];
+  var ServoTransform7  = [3467, 3467, 3467, 3467, 3467, 3467, 3467, 3467, 3467];
+  var ServoTransform8  = [8921, 8921, 8921, 8921, 8921, 10816, 10816, 10816,0];
+  var ServoTransform9  = [5154, 5154, 5154, 5154, 5154, 4398, 4078, 4078,0];
+  var ServoTransform10 = [8878, 8878, 8878, 8878, 8878, 8878, 8878, 8878,0];
+  var ServoTransform11 = [6202, 6202, 6202, 3380,0,0,0,0,0];
+  var ServoTransform12 = [9055, 9055, 9055, 11200,0,0,0,0,0]; 
+
+
 
 /*-----------------------------------------------------------------Servo Function----------------------------------------------------------------*/
 function CameraRight(){
@@ -215,6 +232,54 @@ function Unverse(){
     }, i*Delay);
   }    
 }
+
+function Transfrom(){
+  var Delay = 500;
+  var Count = 0;
+  for (var i=0;i<=8;i++){
+    setTimeout(function(){
+      maestro.setTarget(0,  (ServoTransform1[Count]/4.02));
+      maestro.setTarget(1,  (ServoTransform2[Count]/4.02)); 
+      maestro.setTarget(2,  (ServoTransform3[Count]/4.02));
+      maestro.setTarget(3,  (ServoTransform4[Count]/4.02)); 
+      maestro.setTarget(4,  (ServoTransform5[Count]/4.02)); 
+      maestro.setTarget(5,  (ServoTransform6[Count]/4.02));
+      maestro.setTarget(6,  (ServoTransform7[Count]/4.02));  
+      maestro.setTarget(7,  (ServoTransform8[Count]/4.02)); 
+      maestro.setTarget(8,  (ServoTransform9[Count]/4.02));
+      maestro.setTarget(9,  (ServoTransform10[Count]/4.02));
+      maestro.setTarget(10, (ServoTransform11[Count]/4.02)); 
+      maestro.setTarget(11, (ServoTransform12[Count]/4.02));
+      Count++;
+    }, i*Delay);
+  }    
+}
+
+/*------------------------------------------------------------------Motor Function ------------------------------------------------------------------*/
+function MotorForward(){
+   PythonShell.run('MotorForward.py', function (err) {
+  if (err) throw err;
+  console.log('finished');
+  });
+}
+function MotorBackward(){
+   PythonShell.run('MotorBackward.py', function (err) {
+  if (err) throw err;
+  console.log('finished');
+  });
+}
+function MotorRight(){
+   PythonShell.run('MotorRight.py', function (err) {
+  if (err) throw err;
+  console.log('finished');
+  });
+}
+function MotorLeft(){
+   PythonShell.run('MotorLeft.py', function (err) {
+  if (err) throw err;
+  console.log('finished');
+  });
+}
 /*-------------------------------------------------------------------Handling Request----------------------------------------------------------------*/
 // Web Socket Connection
 io.sockets.on('connection', function (socket) {
@@ -275,6 +340,29 @@ io.sockets.on('connection', function (socket) {
       console.log("CameraDown");
       CameraDown();   
   });
+  socket.on('MF', function(data) {
+      console.log("MotorForward");
+      MotorForward();
+  });
+  socket.on('MB', function(data) {
+      console.log("CameraDown");
+      MotorBackward();  
+  });
+
+   socket.on('MR', function(data) {
+      console.log("MotorRight");
+      MotorRight();  
+  });
+    socket.on('ML', function(data) {
+      console.log("MotorLeft");
+      MotorLeft();  
+  });  
+
+   socket.on('DR', function(data) {
+      console.log("CameraDown");
+      Transfrom();  
+  });
+
 /* setInterval(function(){
     //console.log("sending compass info");
     compass();
