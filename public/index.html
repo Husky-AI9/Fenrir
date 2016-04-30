@@ -1,232 +1,129 @@
-
-<html lang="en">
+<!DOCTYPE html>
+<html>
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <!-- Loading Bootstrap -->
+  <link href="dist/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Loading Flat UI -->
+  <link href="dist/css/flat-ui.css" rel="stylesheet">
+  <link href="docs/assets/css/demo.css" rel="stylesheet"> 
+  <link rel="stylesheet" type="text/css" href="dist/button.css">
+  <!-- Loading Javascript -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/socket.io.js"></script>
+  <script src="js/client.js"></script>
+  <script src="interactive.js"></script>
 
- <script src="https://maps.googleapis.com/maps/api/js"></script>
- <script src="js/jquery.min.js"></script>
- <script src="js/socket.io.js"></script>
- <script src="js/client.js"></script>
- <script src="interactive.js"></script>
 
- <script>
-      function initialize() {
-        var mapCanvas = document.getElementById('map');
-        var mapOptions = {
-          center: new google.maps.LatLng(44.5403, -78.5463),
-          zoom: 17,
-          mapTypeId: google.maps.MapTypeId.SATELLITE
-        }
-        var map = new google.maps.Map(mapCanvas, mapOptions)
-      }
-      google.maps.event.addDomListener(window, 'load', initialize);
-  </script>
+<style>
 
-  <style>
-  @import url('http://fonts.googleapis.com/css?family=Wallpoet');
 body {
-     margin: 0;
-  padding: 0;
-  height: 100%;    
+    background-color:#22313F;
 }
-.wrapper{
-  height: 100%;
-
+#bottomstuff{
+   border-radius: 45px;
+  width: 200px;
+  height: 50px;
+  float: right;
+  margin-right: 70px;
+  margin-top: 50px;
 }
-.div1{
-  height: 75%;
-  background-color: #bdc3c7;
- }
- .stream{
+ #wrapper{
   width: 100%;
-  height:100%;
-  z-index: -100;
+  height: 450px;
+  margin-top: 20px;
+  white-space: nowrap;
+   } 
+
+ #sidebar{
+  border: 5px solid #19B5FE; 
+  float: left;
+  height: 420px;
+  width: 20%;
+  background-color: #354b60;
+  border-radius: 25px;
+  margin-right: 20px;
+  margin-left: 20px;
+ }
+ #video{
+    border-radius: 25px;
+    background: #C5EFF7;
+    border: 5px solid #19B5FE; 
+    width: 65%;
+    height: 420px;
+    display: inline-block;
+    overflow: hidden;
+ }
+ #barbox{
+  width: 150px;
+  height: 50px;
+  margin-left: 70px;
+  float: left;
+  margin-top: 25px;
+  border-radius: 25px;
 
  }
-
-.compass {
-  width: 180px;
-  height: 190px;
-  float: right;
-  margin-top: -1%;
-  overflow: hidden;
-  z-index: 1;
-
-
-}
-
-.compass .disc {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 200;
-  background: url('http://imgh.us/compass.svg');
-  width: 180px;
-  height: 180px;
-  float: right;
-  background-size: 100%;
-  background-repeat: repeat-x;
-}
-.compass .disc .map {
-  margin-left: 14.5%;
-  margin-top: 13%;
-  width: 130px;
-  height: 130px;
-  background-color: red;
-  border-radius: 50%;
-  
-}
-
-.div2 {
- height: 25%;
-  margin: 0;
-
-}
-
-.dpad{
-width: 13%;
-height:100%;
-position: relative;
-display: inline-block;
-border-right: 1px solid black;
-
-}
-
-.d:hover{
-  background: #404d4d;
-}
-
-.up{
-  width: 3em;
-  height: 3em;
-  background: #1d2323;
-  position: absolute;
-  border-top: 0.05em solid #7b9191;
-  border-bottom: 0.05em solid black;
-  left: 4em;
-  top: 1em;
-  border-radius: .25em .25em 0 0;
-
-}
-
-.down{
-  width: 3em;
-  height: 3em;
-  background: #1d2323;
-  position: absolute;
-  border-top: 0.05em solid #7b9191;
-  border-bottom: 0.05em solid black;
-  left: 4em;
-  top: 7em;
-  border-radius: 0 0 .25em .25em;
-
-}
-
-.left{
-  width: 3em;
-  height: 3em;
-  background: #1d2323;
-  position: absolute;
-  border-top: 0.05em solid #7b9191;
-  border-bottom: 0.05em solid black;
-  top: 4em;
-  left: 1em;
-  border-radius: .25em 0 0 .25em;
-
-
-}
-
-.right{
-  width: 3em;
-  height: 3em;
-  background: #1d2323;
-  position: absolute;
-  border-top: 0.05em solid #7b9191;
-  border-bottom: 0.05em solid black;
-  top: 4em;
-  left: 7em;
-  border-radius: 0 .25em .25em 0;
-}
-
-.mode{
-  width: 40%;
-  height: 100%;
-  background-color: orange;
-  display: inline-block;
-
-
-}
-
-.b{
-  width: 20%;
-  height: 20%;
-  float: left;
-  border-radius: 5px;
-  border: 1px solid #22313F;
-  margin-right: 2%; 
-  text-align: center;
-  padding-top: 10px;
-  margin-top: 10px;
-  background-color: #3498DB; 
-}
-
-.b:hover{
-  background-color: #81CFE0; 
-}
-
-.rest{
-  margin-left: 5%;
-}
-
-.orientation{
-  height: 100%;
-  width: 25%;
-  background-color: gray;
-  display: inline-block;
-}
-canvas{
-  display: inline-block;
-  width: 25%;
-  height: 100%;
-  border-left: 2px solid green;
-  border-right: 2px solid green;
-
-}
-
-
-  </style>
-</head> 
+  #rcorners1{
+    border-radius: 25px;
+    background: #22A7F0;
+    padding: 20px; 
+    width: 20%;
+    height: 150px;
+    position:  absolute;
+ }
+  #bottombar{
+    border-radius: 25px;
+    background: #22A7F0;
+    width: 45%;
+    height: 150px;
+    margin-left: 320px;
+ }
+ #button{
+  width: 70px;
+  height: 35px;
+ }
+#button1{
+  width: 70px;
+  height: 35px;
+  opacity: 0;
+ }
+</style>
+</head>
 <body>
-<div class="wrapper">
-    <div class="div1">
-      <img src="http://raspberrypi:8080/stream/video.mjpeg" class="stream">
-      <div class="compass" >
-        <div class="disc">
-        <div class="map" id="map"></div>
-        </div>
-      </div>
-    
-    </div>
+<div id="wrapper">
+  <div id="sidebar">
+    <div class="ui inverted button"  id="barbox">WHITE</div>
+    <div class="ui inverted  red button"  id="barbox">RED</div>
+    <div class="ui inverted olive button"  id="barbox">OLIVE</div>
+    <div class="ui inverted brown button"  id="barbox">BROWN</div>
+    <div class="ui inverted purple button"  id="barbox">PUE</div>
 
-    <div class="div2">
-      <div class="dpad" id="button">
-        <div id="d-up" class="up d"></div>
-        <div id="d-right" class="right d"></div>
-        <div id="d-down" class="down d"></div>
-        <div id="d-left" class="left d"></div>
-      </div
-      ><div class="mode">
-      <div id="rest" class="b rest">REST</div>
-      <div id='idle' class="b idle">IDLE</div>
-      <div id='walking'class="b walking">WALKING</div>
-      <div id='tank' class="b tank">TANK</div>
-      </div
-      ><canvas id="interactive"></canvas>
-      <script src="cube.js"></script>
-       
+  </div>
+  <div id="video">
+    <img src="http://raspberrypi:8080/stream/video.mjpeg" class="stream"
 
-    </div>
+    width="100%" height="100%" border-radius="25px" frameborder="0" allowfullscreen>
+  </div>
+</div> 
+  <div id="bottombar">
+   <div id="rcorners1">
+    <div id="button1"class="btn btn-embossed btn-primary"></div>
+    <div id="button" class="btn btn-embossed btn-primary"></div>
+    <div id="button1" class="btn btn-embossed btn-primary"></div>
+    <div id="button" class="btn btn-embossed btn-primary"></div>
+    <div id="button1"class="btn btn-embossed btn-primary"></div>
+    <div id="button" class="btn btn-embossed btn-primary"></div>
+    <div id="button1" class="btn btn-embossed btn-primary"></div>
+    <div id="button" class="btn btn-embossed btn-primary"></div>
+   </div> 
+   <div id="bottomstuff" class="ui loading button">Loading</div>
+
+  </div> 
 
 
-</div>
 </body>
 </html>
