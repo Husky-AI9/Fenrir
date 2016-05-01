@@ -32,7 +32,7 @@ $(document).keydown(function(e){ // pressing key
 
 
 if(key == 87){ // w 
- 
+       $("#button1").css("background-color","#19B5FE"); // hover effect  
         socket.emit('F');
     }
 if(key == 65){ // a 
@@ -53,7 +53,7 @@ if(key == 83){ // s
 
 
 $(document).ready(function() {
- $("#d-up").click(function(){
+ $("#barbox").click(function(){
      socket.emit('F');
       });
  $("#d-down").click(function(){
